@@ -1,6 +1,6 @@
 # theUnixManager
 
-theUnixManager - ultimate package manager && initem ht sysandler made by Archetypum that simplifies interaction with UNIX systems and creation of system-related python scripts. 
+theUnixManager - ultimate package manager && initem ht sysandler made by Archetypum that simplifies interaction with UNIX systems and creation of system-related python/bash scripts. 
 
 ## Installation (as root):
 
@@ -15,6 +15,8 @@ cd theUnixManager
 And then use it in your scripts:
 
 ```python3
+#!/usr/bin/python3
+
 import the_unix_manager as tum
 
 distro = tum.get_user_distro()
@@ -30,6 +32,8 @@ theUnixManager is a project by Archetypum with:
 (https://github.com/Kinderfeld)
  - WretchOfLights as the documentation writer.
 (https://github.com/WretchOfLights)
+- wazups as the illustrator
+(https://github.com/wazups)
 
 ## License
 
