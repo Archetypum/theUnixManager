@@ -21,7 +21,7 @@ Date: 18.10.2024
 """
 
 # theUnixManger version:
-the_unix_manager_version: str = "v1.0.0-unstable"
+THE_UNIX_MANAGER_VERSION: str = "v1.0.0-unstable"
 
 # ANSI Color codes and text formating:
 BLACK: str = "\033[90m"
@@ -89,7 +89,7 @@ def the_unix_manager_version() -> str:
          str: theUnixManager version.
     """
 
-    return the_unix_manager_version
+    return THE_UNIX_MANAGER_VERSION
 
 def the_unix_manager_tester() -> None:
     """
@@ -187,120 +187,198 @@ def clear_screen() -> bool:
         return True
 
 
-def is_debian_based(distro: str) -> bool:
+def is_debian_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Debian based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Debian based...")
     return True if distro in DEBIAN_BASED else False
 
 
-def is_arch_based(distro: str) -> bool:
+def is_arch_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Arch based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Arch based...")
     return True if distro is ARCH_BASED else False
 
 
-def is_alpine_based(distro: str) -> bool:
+def is_alpine_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Alpine based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Alpine based...")
     return True if distro is ALPINE_BASED else False
 
 
-def is_gentoo_based(distro: str) -> bool:
+def is_gentoo_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Gentoo based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Gentoo based...")
     return True if distro is GENTOO_BASED else False
 
 
-def is_void_based(distro: str) -> bool:
+def is_void_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Void based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Void based...")
     return True if distro is VOID_BASED else False
 
 
-def is_dragora_based(distro: str) -> bool:
+def is_dragora_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Dragora based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Dragora based...")
     return True if distro is DRAGORA_BASED else False
 
 
-def is_slackware_based(distro: str) -> bool:
+def is_slackware_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Slackware based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Slackware based...")
     return True if distro is SLACKWARE_BASED else False
 
 
-def is_fedora_based(distro: str) -> bool:
+def is_fedora_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Fedora based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Fedora based...")
     return True if distro is FEDORA_BASED else False
 
 
-def is_centos_based(distro: str) -> bool:
+def is_centos_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is CentOS based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is CentOS based...")
     return True if distro in CENTOS_BASED else False
 
 
-def is_guix_based(distro: str) -> bool:
+def is_guix_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is Guix based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is Guix based...")
     return True if distro in GUIX_BASED else False
 
 
-def is_freebsd_based(distro: str) -> bool:
+def is_freebsd_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is FreeBSD based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is FreeBSD based...")
     return True if distro in FREEBSD_BASED else False
 
 
-def is_openbsd_based(distro: str) -> bool:
+def is_openbsd_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is OpenBSD based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is OpenBSD based...")
     return True if distro in OPENBSD_BASED else False
 
 
-def is_netbsd_based(distro: str) -> bool:
+def is_netbsd_based(distro: str, log: bool = False) -> bool:
     """
+    Args:
+        distro (str): User's operating system.
+        log (bool): Enables/Disables logging.
+
     Returns:
         bool: If provided distro is NetBSD based.
     """
 
+    if log:
+        print(f"[<==] Checking if {distro} is NetBSD based...")
     return True if distro in NETBSD_BASED else False
 
 
@@ -418,9 +496,6 @@ class SystemdManagement:
     def reload_service(self) -> bool:
         return self._run_systemctl("reload")
 
-    def force_reload_service(self) -> bool:
-        return self._run_systemctl("restart")
-
     def restart_service(self) -> bool:
         return self._run_systemctl("restart")
 
@@ -432,7 +507,6 @@ class SystemdManagement:
             "start": self.start_service,
             "stop": self.stop_service,
             "reload": self.reload_service,
-            "force_reload": self.force_reload_service,
             "restart": self.restart_service,
             "status": self.status_service
         }
@@ -810,6 +884,7 @@ class DebianPackageManagement:
     def name(self) -> str:
         return self.distro
 
+    # apt methods:
     @staticmethod
     def update() -> bool:
         try:
@@ -875,6 +950,36 @@ class DebianPackageManagement:
         except subprocess.CalledProcessError as apt_autoremove_error:
             print(f"{RED}[!] Error: {apt_autoremove_error}{RESET}")
             return False
+
+    # dpkg methods:
+    @staticmethod
+    def dpkg_install(deb_path: str) -> bool:
+        try:
+            subprocess.run(["dpkg", "--install", deb_path], check=True)
+            return True
+        except subprocess.CalledProcessError as dpkg_install_error:
+            print(f"{RED}[!] Error: {dpkg_install_error}{RESET}")
+            return False
+
+    @staticmethod
+    def dpkg_remove(packages: List[str]) -> bool:
+        for package in packages:
+            try:
+                subprocess.run(["dpkg", "--remove", package], check=True)
+                return True
+            except subprocess.CalledProcessError as dpkg_remove_error:
+                print(f"{RED}[!] Error: {dpkg_remove_error}{RESET}")
+                return False
+
+    @staticmethod
+    def dpkg_purge(packages: List[str]) -> bool:
+        for package in packages:
+            try:
+                subprocess.run(["dpkg", "--purge", package], check=True)
+                return True
+            except subprocess.CalledProcessError as dpkg_purge_error:
+                print(f"{RED}[!] Error: {dpkg_purge_error}{RESET}")
+                return False
 
 
 class GentooPackageManagement:
@@ -1593,9 +1698,18 @@ class NetBSDPackageManagement:
                 return False
 
 
-def package_handling(distro: str, package_list: List[str], command: str) -> bool:
+def package_handling(distro: str, package_list: List[str], command: str, pm: str = "apt") -> bool:
     """
     Handles package downloading for different GNU/Linux and BSD distributions.
+
+    Args:
+        distro (str): User's operating system.
+        package_list (list): Lists of packages to handle.
+        command (str): Handling command.
+        pm (str): Package manager choice for Debian based distributions: apt or dpkg.
+
+    Returns:
+        bool: Package handling status.
     """
 
     print(f"[<==] Installing requirements {package_list}...")
@@ -1603,11 +1717,15 @@ def package_handling(distro: str, package_list: List[str], command: str) -> bool
 
     try:
         if command == "install":
-            if distro in DEBIAN_BASED:
+            if distro in DEBIAN_BASED and pm == "apt":
                 debian = DebianPackageManagement(distro, packages=package_list)
                 debian.update()
                 debian.upgrade()
                 debian.install(package_list)
+                return True
+            elif distro in DEBIAN_BASED and pm == "dpkg":
+                debian = DebianPackageManagement(distro, packages=package_list)
+                debian.dpkg_install(package_list[0])
                 return True
 
             elif distro in ARCH_BASED:
@@ -1698,9 +1816,13 @@ def package_handling(distro: str, package_list: List[str], command: str) -> bool
                 return False
 
         if command == "remove":
-            if distro in DEBIAN_BASED:
+            if distro in DEBIAN_BASED and pm == "apt":
                 debian = DebianPackageManagement(distro, packages=package_list)
                 debian.remove(package_list)
+                return True
+            elif distro in DEBIAN_BASED and pm == "dpkg":
+                debian = DebianPackageManagement(distro, packages=package_list)
+                debian.dpkg_remove(package_list)
                 return True
 
             elif distro in ARCH_BASED:
@@ -1850,9 +1972,13 @@ def package_handling(distro: str, package_list: List[str], command: str) -> bool
                 return False
 
         if command == "purge":
-            if distro in DEBIAN_BASED:
+            if distro in DEBIAN_BASED and pm == "apt":
                 debian = DebianPackageManagement(distro, packages=package_list)
                 debian.purge(package_list)
+                return True
+            elif distro in DEBIAN_BASED and pm == "dpkg":
+                debian = DebianPackageManagement(distro, packages=package_list)
+                debian.dpkg_purge(package_list)
                 return True
 
             elif distro in ARCH_BASED:
@@ -1885,9 +2011,7 @@ def init_system_handling(init_system: str, command: str, service: str) -> bool:
 
     Args:
         init_system (str): The name of the init system being used
-            (e.g., 'systemd', 'sysvinit', 's6').
         command (str): The command to execute for service management
-            (e.g., 'enable', 'start', 'stop').
         service (str): The name of the service to manage.
 
     Returns:
@@ -1920,7 +2044,7 @@ def init_system_handling(init_system: str, command: str, service: str) -> bool:
             _ = OpenRCManagement(command, service)
             return True
         else:
-            print(f"{RED}[!] Error: unsupported init system: {init_system}.{RESET}")
+            print(f"{RED}[!] Error: unsupported init system: {init_system}{RESET}")
             exit(1)
 
     except subprocess.CalledProcessError as init_system_handling_error:
