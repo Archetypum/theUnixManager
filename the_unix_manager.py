@@ -161,6 +161,7 @@ def the_unix_manager_tester() -> None:
     successfully_tested.append(package_handling(distro, package_list=[], command="update"))
     successfully_tested.append(package_handling(distro, package_list=["htop"], command="remove"))
     successfully_tested.append(package_handling(distro, package_list=[], command="autoremove"))
+    successfully_tested.append(init_system_handling(init_system, command="start", service="ssh"))
 
     if not all(successfully_tested):
         print(f"\n{ORANGE}[!] Some tests are not passed:{RESET}")
@@ -502,6 +503,69 @@ class SysVInitManagement:
             return False
 
 
+class InitManagement:
+    """
+    A class for managing services using Init.
+
+    This class provides methods to perform basic operations on services,
+    such as starting, stopping, reloading, and checking the status. It uses the
+    'service' utility to manage services and handles errors that occur during
+    command execution.
+
+    Attributes:
+        command (str): The command to perform on the service (start, stop, restart, reload, force-reload, status).
+        service (str): The name of the service to manage.
+
+    Take notes:
+        Its SysVInit management but with a different name.
+    """
+
+    def __init__(self, command: str, service: str) -> None:
+        self.command: str = command
+        self.service: str = service
+
+    def _run_service(self, action: str) -> bool:
+        try:
+            subprocess.run(["service", self.service, action], check=True)
+            return True
+        except subprocess.CalledProcessError as run_service_error:
+            print(f"{RED}[!] Error: {run_service_error}{RESET}")
+            return False
+
+    def start_service(self) -> bool:
+        return self._run_service("start")
+
+    def stop_service(self) -> bool:
+        return self._run_service("stop")
+
+    def reload_service(self) -> bool:
+        return self._run_service("reload")
+
+    def force_reload_service(self) -> bool:
+        return self._run_service("force-reload")
+
+    def restart_service(self) -> bool:
+        return self._run_service("restart")
+
+    def status_service(self) -> bool:
+        return self._run_service("status")
+
+    def execute(self) -> bool:
+        commands: dict = {
+            "start": self.start_service,
+            "stop": self.stop_service,
+            "reload": self.reload_service,
+            "force_reload": self.force_reload_service,
+            "restart": self.restart_service,
+            "status": self.status_service
+        }
+        if self.command in commands:
+            return commands[self.command]()
+        else:
+            print(f"{RED}[!] Unknown command: {self.command}{RESET}")
+            return False
+
+
 class OpenRCManagement:
     """
     A class for managing services using OpenRC.
@@ -576,7 +640,7 @@ class S6Management:
         self.command: str = command
         self.service: str = service
 
-    def _run_s6(self, action: str) -> bool:
+    def _run_s6_svc(self, action: str) -> bool:
         try:
             subprocess.run(["s6-svc", action, self.service], check=True)
             return True
@@ -585,25 +649,77 @@ class S6Management:
             return False
 
     def start_service(self) -> bool:
-        return self._run_s6("up")
+        return self._run_s6_svc("up")
 
     def stop_service(self) -> bool:
-        return self._run_s6("down")
+        return self._run_s6_svc("down")
 
     def reload_service(self) -> bool:
-        return self._run_s6("reload")
+        return self._run_s6_svc("reload")
 
     def restart_service(self) -> bool:
-        return self._run_s6("restart")
+        return self._run_s6_svc("restart")
 
     def status_service(self) -> bool:
-        return self._run_s6("status")
+        return self._run_s6_svc("status")
 
     def execute(self) -> bool:
         commands: dict = {
             "start": self.start_service,
             "stop": self.stop_service,
             "reload": self.reload_service,
+            "restart": self.restart_service,
+            "status": self.status_service
+        }
+        if self.command in commands:
+            return commands[self.command]()
+        else:
+            print(f"{RED}[!] Error: Unknown command: {self.command}{RESET}")
+            return False
+
+
+class RunitManagement:
+    """
+    A class for managing services using runit.
+
+    This class provides methods to perform basic operations on services,
+    such as starting, stopping, reloading, and checking the status. It uses the
+    'sv' utility to manage services and handles errors that occur during
+    command execution.
+
+    Attributes:
+        command (str): The command to perform on the service (start, stop, restart, reload, status).
+        service (str): The name of the service to manage.
+    """
+
+    def __init__(self, command: str, service: str) -> None:
+        self.command: str = command
+        self.service: str = service
+
+    def _run_sv(self, action: str) -> bool:
+        try:
+            subprocess.run(["sv", action, self.service], check=True)
+            return True
+        except subprocess.CalledProcessError as error:
+            print(f"{RED}[!] Error: {error}{RESET}")
+            return False
+
+    def start_service(self) -> bool:
+        return self._run_sv("up")
+
+    def stop_service(self) -> bool:
+        return self._run_sv("down")
+
+    def restart_service(self) -> bool:
+        return self._run_sv("restart")
+
+    def status_service(self) -> bool:
+        return self._run_sv("status")
+
+    def execute(self) -> bool:
+        commands: dict = {
+            "start": self.start_service,
+            "stop": self.stop_service,
             "restart": self.restart_service,
             "status": self.status_service
         }
@@ -1760,6 +1876,55 @@ def package_handling(distro: str, package_list: List[str], command: str) -> bool
 
     except subprocess.CalledProcessError as package_handling_error:
         print(f"{RED}[!] Error: {package_handling_error}{RESET}")
+        return False
+
+
+def init_system_handling(init_system: str, command: str, service: str) -> bool:
+    """
+    Handles service management based on the provided init system.
+
+    Args:
+        init_system (str): The name of the init system being used
+            (e.g., 'systemd', 'sysvinit', 's6').
+        command (str): The command to execute for service management
+            (e.g., 'enable', 'start', 'stop').
+        service (str): The name of the service to manage.
+
+    Returns:
+        bool: True if the service management command was executed successfully, False otherwise.
+    """
+
+    print(f"[<==] Enabling services [{service}]...")
+    sleep(1)
+
+    try:
+        if init_system == "systemd":
+            _ = SystemdManagement(command, service)
+            return True
+        elif init_system == "sysvinit":
+            _ = SysVInitManagement(command, service)
+            return True
+        elif init_system == "init":
+            _ = InitManagement(command, service)
+            return True
+        elif init_system == "s6":
+            _ = S6Management(command, service)
+            return True
+        elif init_system == "runit":
+            _ = RunitManagement(command, service)
+            return True
+        elif init_system == "launchd":
+            _ = LaunchdManagement(command, service)
+            return True
+        elif init_system == "openrc":
+            _ = OpenRCManagement(command, service)
+            return True
+        else:
+            print(f"{RED}[!] Error: unsupported init system: {init_system}.{RESET}")
+            exit(1)
+
+    except subprocess.CalledProcessError as init_system_handling_error:
+        print(f"{RED}[!] Error: {init_system_handling_error}{RESET}")
         return False
 
 
