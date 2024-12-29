@@ -1,4 +1,5 @@
 # theUnixManager
+![theUnixManager111](https://github.com/user-attachments/assets/5be702c4-f084-46ea-b748-b72f0cdc8435)
 
 theUnixManager - ultimate package manager && initem ht sysandler made by Archetypum that simplifies interaction with UNIX systems and creation of system-related python/bash scripts. 
 
