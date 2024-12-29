@@ -1,7 +1,7 @@
 # theUnixManager
-![theUnixManager111](https://github.com/user-attachments/assets/5be702c4-f084-46ea-b748-b72f0cdc8435)
+![theUnixManagerEdited](https://github.com/user-attachments/assets/6c0b3fbc-1d09-4d35-9dde-33b22a468c45)
 
-theUnixManager - ultimate package manager && initem ht sysandler made by Archetypum that simplifies interaction with UNIX systems and creation of system-related python/bash scripts. 
+theUnixManager - ultimate package manager && init system handler made by Archetypum that simplifies interaction with UNIX systems and creation of system-related python/bash scripts. 
 
 ## Installation (as root):
 
