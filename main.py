@@ -1,16 +1,23 @@
 #!/usr/bin/python3
 
 """
+---------------------------------------
 This is theUnixManager - ultimate package manager && init system handler
 made by Archetypum that simplifies interaction with UNIX systems and creation of system-related python scripts.
 
+Archetypum: (https://github.com/Archetypum)
 Github repo link: (https://github.com/Archetypum/theUnixManager)
 Real usage example: (https://github.com/Archetypum/theSuffocater)
 
 TODO:
     * add logging functionality arguments.
     * test this on more systems.
+    * add bash version.
     * many more?
+
+Author: iva
+Date: 18.10.2024
+---------------------------------------
 """
 
 # theUnixManger version:
@@ -91,30 +98,75 @@ def the_unix_manager_tester() -> None:
     Returns:
          None: nothing.
     """
-
+    successfully_tested: list = []
     init_system: str = get_init_system()
     distro: str = get_user_distro()
 
     print(f"user distro: {distro}")
-    print(f"user init system: {init_system}")
-    print(f"{BLACK}black text{RESET}")
-    print(f"{YELLOW}yellow text{RESET}")
-    print(f"{ORANGE}orange text{RESET}")
-    print(f"{BLUE}blue text{RESET}")
-    print(f"{PURPLE}purple text{RESET}")
-    print(f"{GREEN}green text{RESET}")
-    print(f"{RED}red text{RESET}")
-    print(f"{BOLD}bold text{RESET}")
-    print(f"{UNDERLINE}underlined text{RESET}")
-    print(f"{REVERSED}reversed text{RESET}")
-    print(f"{ITALIC}italic text{RESET}")
-    print(f"{CROSSED_OUT}crossed out text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
 
-    if prompt_user("type yes"):
-        print("yes")
+    print(f"user init system: {init_system}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{BLACK}black text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{YELLOW}yellow text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{ORANGE}orange text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{BLUE}blue text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{PURPLE}purple text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{GREEN}green text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{RED}red text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{BOLD}bold text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{UNDERLINE}underlined text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{REVERSED}reversed text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{ITALIC}italic text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    print(f"{CROSSED_OUT}crossed out text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+
+    successfully_tested.append(package_handling(distro, package_list=[], command="update"))
+    successfully_tested.append(package_handling(distro, package_list=["htop"], command="remove"))
+    successfully_tested.append(package_handling(distro, package_list=[], command="autoremove"))
+
+    if not all(successfully_tested):
+        print(f"\n{ORANGE}[!] Some tests are not passed:{RESET}")
     else:
-        print("no")
-        clear_screen()
+        print(f"\n{GREEN}[*] All tests are successfully passed!")
+    print(successfully_tested)
 
 
 def clear_screen() -> bool:
@@ -647,8 +699,8 @@ class DebianPackageManagement:
         try:
             subprocess.run(["apt", "update"], check=True)
             return True
-        except subprocess.CalledProcessError as e:
-            print(f"{RED}[!] Error: {e}{RESET}")
+        except subprocess.CalledProcessError as apt_update_error:
+            print(f"{RED}[!] Error: {apt_update_error}{RESET}")
             return False
 
     @staticmethod
@@ -1680,6 +1732,31 @@ def package_handling(distro: str, package_list: List[str], command: str) -> bool
             else:
                 print(f"{RED}[!] Error: Unsupported distribution: {distro}.{RESET}")
                 return False
+
+        if command == "purge":
+            if distro in DEBIAN_BASED:
+                debian = DebianPackageManagement(distro, packages=package_list)
+                debian.purge(package_list)
+                return True
+
+            elif distro in ARCH_BASED:
+                arch = ArchPackageManagement(distro, packages=package_list)
+                arch.purge(package_list)
+                return True
+
+            else:
+                print(f"{RED}[!] Error: Unsupported distribution: {distro}.{RESET}")
+                return False
+
+        if command == "autoremove":
+            if distro in DEBIAN_BASED:
+                debian = DebianPackageManagement(distro, packages=[])
+                debian.autoremove()
+                return True
+
+        else:
+            print(f"{RED}[!] Error: Unsupported distribution: {distro}.{RESET}")
+            return False
 
     except subprocess.CalledProcessError as package_handling_error:
         print(f"{RED}[!] Error: {package_handling_error}{RESET}")
