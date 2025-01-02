@@ -2097,7 +2097,7 @@ def package_handling(distro: str, package_list: List[str], command: str, pm: str
                 debian.dpkg_purge(package_list)
                 return True
             elif distro in DEBIAN_BASED and pm == "aptitude":
-                debian = DebianPackageManagement(distro, package=package_list)
+                debian = DebianPackageManagement(distro, packages=package_list)
                 debian.aptitude_purge(package_list)
                 return True
 
