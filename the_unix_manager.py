@@ -90,6 +90,7 @@ def the_unix_manager_version() -> str:
 
     return THE_UNIX_MANAGER_VERSION
 
+
 def the_unix_manager_tester() -> None:
     """
     Small autotests.
@@ -97,6 +98,9 @@ def the_unix_manager_tester() -> None:
     Returns:
          None: nothing.
     """
+    
+    print(f"theUnixManager version: {the_unix_manager_version()}\n")
+    
     successfully_tested: list = []
     init_system: str = get_init_system()
     distro: str = get_user_distro()
@@ -104,58 +108,86 @@ def the_unix_manager_tester() -> None:
     print(f"user distro: {distro}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"user init system: {init_system}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{BLACK}black text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{YELLOW}yellow text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{ORANGE}orange text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{BLUE}blue text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{PURPLE}purple text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{GREEN}green text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{RED}red text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{BOLD}bold text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{UNDERLINE}underlined text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{REVERSED}reversed text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{ITALIC}italic text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     print(f"{CROSSED_OUT}crossed out text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
 
     successfully_tested.append(package_handling(distro, package_list=[], command="update"))
     successfully_tested.append(package_handling(distro, package_list=["htop"], command="remove"))
@@ -869,7 +901,7 @@ class LaunchdManagement:
 
 class DebianPackageManagement:
     """
-    A class for managing packages using apt && dpkg.
+    A class for managing packages using apt, aptitude, and dpkg.
 
     It includes functionality for updating, upgrading, installing, removing, purging and removing unused dependencies.
     The methods are designed to interact with the system's package manager through subprocess calls and return boolean
@@ -948,6 +980,82 @@ class DebianPackageManagement:
             return True
         except subprocess.CalledProcessError as apt_autoremove_error:
             print(f"{RED}[!] Error: {apt_autoremove_error}{RESET}")
+            return False
+    
+    # aptitude methods:
+    @staticmethod
+    def aptitude_update() -> bool:
+        try:
+            subprocess.run(["aptitude", "update"], check=True)
+            return True
+        except subprocess.CalledProcessError as aptitude_update_error:
+            print(f"{RED}[!] Error: {aptitude_update_error}{RESET}")
+            return False
+    
+    @staticmethod
+    def aptitude_upgrade() -> bool:
+        try:
+            subprocess.run(["aptitude", "upgrade", "-y"], check=True)
+            return True
+        except subprocess.CalledProcessError as aptitude_upgrade_error:
+            print(f"{RED}[!] Error: {aptitude_upgrade_error}{RESET}")
+            return False
+
+    @staticmethod
+    def aptitude_safe_upgrade() -> bool:
+        try:
+            subprocess.run(["aptitude", "safe-upgrade", "-y"], check=True)
+            return True
+        except subprocess.CalledProcessError as aptitude_safe_upgrade_error:
+            print(f"{RED}[!] Error: {aptitude_safe_upgrade_error}{RESET}")
+            return False
+
+    @staticmethod
+    def aptitude_full_upgrade() -> bool:
+        try:
+            subprocess.run(["aptitude", "full-upgrade", "-y"], check=True)
+            return True
+        except subprocess.CalledProcessError as aptitude_full_upgrade_error:
+            print(f"{RED}[!] Error: {aptitude_full_upgrade_error}{RESET}")
+            return False
+
+    @staticmethod
+    def aptitude_install(packages: List[str]) -> bool:
+        for package in packages:
+            try:
+                subprocess.run(["aptitude", "install", package, "-y"], check=True)
+                return True
+            except subprocess.CalledProcessError as aptitude_install_error:
+                print(f"{RED}[!] Error: {aptitude_install_error}{RESET}")
+                return False
+
+    @staticmethod
+    def aptitude_remove(packages: List[str]) -> bool:
+        for package in packages:
+            try:
+                subprocess.run(["aptitude", "remove", package, "-y"], check=True)
+                return True
+            except subprocess.CalledProcessError as aptitude_remove_error:
+                print(f"{RED}[!] Error: {aptitude_remove_error}{RESET}")
+                return False
+
+    @staticmethod
+    def aptitude_purge(packages: List[str]) -> bool:
+        for package in packages:
+            try:
+                subprocess.run(["aptitude", "purge", package, "-y"], check=True)
+                return True
+            except subprocess.CalledProcessError as aptitude_purge_error:
+                print(f"{RED}[!] Error: {aptitude_purge_error}{RESET}")
+                return False
+
+    @staticmethod
+    def aptitude_autoclean() -> bool:
+        try:
+            subprocess.run(["aptitude", "autoclean", "-y"], check=True)
+            return True
+        except subprocess.CalledProcessError as aptitude_autoclean_error:
+            print(f"{RED}[!] Error: {aptitude_autoclean_error}{RESET}")
             return False
 
     # dpkg methods:
@@ -1726,7 +1834,12 @@ def package_handling(distro: str, package_list: List[str], command: str, pm: str
                 debian = DebianPackageManagement(distro, packages=package_list)
                 debian.dpkg_install(package_list[0])
                 return True
-
+            elif distro in DEBIAN_BASED and pm == "aptitude":
+                debian = DebianPackageManagement(distro, packages=package_list)
+                debian.aptitude_update()
+                debian.aptitude_upgrade()
+                debian.aptitude_install(package_list)
+            
             elif distro in ARCH_BASED:
                 arch = ArchPackageManagement(distro, packages=package_list)
                 arch.update_upgrade()
@@ -1823,8 +1936,12 @@ def package_handling(distro: str, package_list: List[str], command: str, pm: str
                 debian = DebianPackageManagement(distro, packages=package_list)
                 debian.dpkg_remove(package_list)
                 return True
+            elif distro in DEBIAN_BASED and pm == "aptitude":
+                debian = DebianPackageManagement(distro, packages=package_list)
+                debian.aptitude_remove(package_list)
+                return True
 
-            elif distro in ARCH_BASED:
+            elif distro in ARCH_BASED:  
                 arch = ArchPackageManagement(distro, packages=package_list)
                 arch.remove(package_list)
                 return True
@@ -1979,6 +2096,10 @@ def package_handling(distro: str, package_list: List[str], command: str, pm: str
                 debian = DebianPackageManagement(distro, packages=package_list)
                 debian.dpkg_purge(package_list)
                 return True
+            elif distro in DEBIAN_BASED and pm == "aptitude":
+                debian = DebianPackageManagement(distro, package=package_list)
+                debian.aptitude_purge(package_list)
+                return True
 
             elif distro in ARCH_BASED:
                 arch = ArchPackageManagement(distro, packages=package_list)
@@ -1989,10 +2110,14 @@ def package_handling(distro: str, package_list: List[str], command: str, pm: str
                 print(f"{RED}[!] Error: Unsupported distribution: {distro}.{RESET}")
                 return False
 
-        if command == "autoremove":
-            if distro in DEBIAN_BASED:
+        if command == "autoremove" or command == "autoclean":
+            if distro in DEBIAN_BASED and pm == "apt":
                 debian = DebianPackageManagement(distro, packages=[])
                 debian.autoremove()
+                return True
+            elif distro in DEBIAN_BASED and pm == "aptitude":
+                debian = DebianPackageManagement(distro, packages=[])
+                debian.aptitude_autoclean()
                 return True
 
         else:
