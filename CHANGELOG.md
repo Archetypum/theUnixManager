@@ -1,6 +1,10 @@
 # theUnixManager v1.0.0-stable
 
-(more info soon)
+This is the first stable release of theUnixManager.
+Features python3 and bash versions, supports 7 init systems (systemd, sysvinit, init, s6, runit, launchd, openrc),
+and 52 GNU/Linux and BSD UNIX distributions.
+
+Nothing left to say here anymore, its just first stable release.
 
 "cloc ." statistics:
 

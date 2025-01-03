@@ -426,7 +426,7 @@ def prompt_user(prompt: str, default: str = "N") -> bool:
         bool: True for 'y', 'ye', 'yes' (case-insensitive); False for 'n', 'no' (case-insensitive).
     """
 
-    user_input: str = input(f"{prompt} (y/N): ").strip().lower()
+    user_input: str = input(f"{prompt} (y/n): ").strip().lower()
 
     if not user_input:
         user_input: str = default.lower()
@@ -1813,7 +1813,7 @@ def package_handling(distro: str, package_list: List[str], command: str, pm: str
         distro (str): User's operating system.
         package_list (list): Lists of packages to handle.
         command (str): Handling command.
-        pm (str): Package manager choice for Debian based distributions: apt or dpkg.
+        pm (str): Package manager choice for Debian based distributions: apt, aptitude or dpkg.
 
     Returns:
         bool: Package handling status.
