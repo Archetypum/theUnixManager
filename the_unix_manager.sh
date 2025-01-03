@@ -18,7 +18,7 @@
 # ---------------------------------------
 
 # theUnixManger version:
-THE_UNIX_MANAGER_VERSION="v1.0.0-unstable"
+declare THE_UNIX_MANAGER_VERSION="v1.0.0-unstable"
 
 # ANSI Color codes and text formating:
 declare BLACK="\033[90m"
@@ -226,7 +226,6 @@ function the_unix_manager_tester() {
 		if [[ "$RESULT" == "false" ]]; then
 			local ALL_TESTS_PASSED="false"
 			break
-
 		fi
 	done
 
