@@ -25,7 +25,7 @@ setup(
     long_description=long_description,
     url="https://github.com/Archetypum/theUnixManager-python",
     download_url="https://github.com/Archetypum/archive/v{}.zip".format("1.0.0"),
-    packages=["theUnixManager"],
+    packages=["the_unix_manager"],
     install_requires=[],
     classifiers=[
         "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
