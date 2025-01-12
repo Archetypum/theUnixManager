@@ -23,7 +23,6 @@ setup(
         "Ultimate package manager and init system handling library made by Archetypum that simplifies interaction with UNIX systems and creation of system-related Python scripts."
     ),
     long_description=long_description,
-    long_description_content_type="text/markdown",
     url="https://github.com/Archetypum/theUnixManager-python",
     download_url="https://github.com/Archetypum/archive/v{}.zip".format("1.0.0"),
     packages=["the_unix_manager"],
