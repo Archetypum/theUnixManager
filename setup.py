@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from io import open
 from setuptools import setup
 
 """
@@ -24,7 +23,7 @@ setup(
     ),
     long_description=long_description,
     url="https://github.com/Archetypum/theUnixManager-python",
-    download_url="https://github.com/Archetypum/archive/v{}.zip".format("1.0.0"),
+    download_url="https://github.com/Archetypum/theUnixManager/releases/tag/v1.0.0-stable",
     packages=["the_unix_manager"],
     install_requires=[],
     classifiers=[

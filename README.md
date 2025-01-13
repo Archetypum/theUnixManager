@@ -22,8 +22,6 @@ init_system = tum.get_init_system()
 
 tum.package_handling(distro, package_list=["git", "vim", "htop", "emacs"], command="install")
 tum.init_system_handling(init_system, command="start", service="ssh")
-
-tum.start_shell()
 ```
 
 ## Credits

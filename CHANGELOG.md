@@ -15,15 +15,15 @@ Nothing left to say here anymore, its just first stable release.
 ```text
       13 text files.
       12 unique files.                              
-       2 files ignored.
+       4 files ignored.
 
-github.com/AlDanial/cloc v 1.96  T=0.02 s (517.0 files/s, 116247.5 lines/s)
+github.com/AlDanial/cloc v 1.96  T=0.03 s (464.8 files/s, 104345.4 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Python                           3            411            344           1498
-Markdown                         9            162              0            282
+Python                           3            411            344           1497
+Markdown                         9            161              0            281
 -------------------------------------------------------------------------------
-SUM:                            12            573            344           1780
+SUM:                            12            572            344           1778
 -------------------------------------------------------------------------------
 ```
