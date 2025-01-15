@@ -25,6 +25,7 @@ WHITE: str = "\033[97m"
 YELLOW: str = "\033[93m"
 ORANGE: str = "\033[38;5;214m"
 BLUE: str = "\033[94m"
+CYAN: str = "\e[0;36m"
 PURPLE: str = "\033[95m"
 GREEN: str = "\033[92m"
 RED: str = "\033[91m"
@@ -146,7 +147,13 @@ def the_unix_manager_tester() -> None:
         successfully_tested.append(True)
     else:
         successfully_tested.append(False)
-
+   
+    print(f"{CYAN}cyan text{RESET}")
+    if prompt_user("[?] is that true?"):
+        successfully_tested.append(True)
+    else:
+        successfully_tested.append(False)
+    
     print(f"{PURPLE}purple text{RESET}")
     if prompt_user("[?] is that true?"):
         successfully_tested.append(True)
