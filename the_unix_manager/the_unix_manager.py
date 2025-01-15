@@ -68,6 +68,26 @@ OPENBSD_BASED: list = ["openbsd", "adj", "libertybsd", "bitrig", "bowlfish", "ek
                        "sonafr", "hyperbolabsd"]
 NETBSD_BASED: list = ["netbsd", "blackbsd", "edgebsd", "seos", "os108", "jibbed"]
 
+# Other globals:
+SUPPORTED_PMS: list = ["apt", "aptitude", "dpkg",
+                            "portage",
+                            "dnf, yum",
+                            "zypper",
+                            "apk",
+                            "xbps",
+                            "qi",
+                            "slackpkg",
+                            "guix",
+                            "pacman",
+                            "pkg",
+                            "pkg_add", "pkgin"
+                            ]
+SUPPORTED_DISTROS: tuple = (
+        DEBIAN_BASED + ARCH_BASED + ALPINE_BASED + GENTOO_BASED + VOID_BASED + DRAGORA_BASED +
+        SLACKWARE_BASED + FEDORA_BASED + CENTOS_BASED + GUIX_BASED +
+        FREEBSD_BASED + OPENBSD_BASED + NETBSD_BASED
+)
+
 try:
     import os
     import platform
@@ -102,116 +122,75 @@ def the_unix_manager_tester() -> None:
     
     print(f"theUnixManager version: {the_unix_manager_version()}\n")
     
-    successfully_tested: list = []
+    test_results: dict = {} 
     init_system: str = get_init_system()
     distro: str = get_user_distro()
 
     print(f"user distro: {distro}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["get_user_distro"] = prompt_user("[?] is that true?")
 
     print(f"user init system: {init_system}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
-    
+    test_results["get_init_system"] = prompt_user("[?] is that true?")
+
     print(f"{BLACK}black text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["black_text"] = prompt_user("[?] is that true?")
 
     print(f"{WHITE}white text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["white_text"] = prompt_user("[?] is that true?")
 
     print(f"{YELLOW}yellow text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["yellow_text"] = prompt_user("[?] is that true?")
 
     print(f"{ORANGE}orange text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["orange_text"] = prompt_user("[?] is that true?")
 
     print(f"{BLUE}blue text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
-   
-    print(f"{CYAN}cyan text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["blue_text"] = prompt_user("[?] is that true?")
     
+    print(f"{CYAN}cyan text{RESET}")
+    test_results["cyan_text"] = prompt_user("[?] is that true")
+
     print(f"{PURPLE}purple text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["purple_text"] = prompt_user("[?] is that true?")
 
     print(f"{GREEN}green text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["green_text"] = prompt_user("[?] is that true?")
 
     print(f"{RED}red text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["red_text"] = prompt_user("[?] is that true?")
 
     print(f"{BOLD}bold text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["bold_text"] = prompt_user("[?] is that true?")
 
     print(f"{UNDERLINE}underlined text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["underlined_text"] = prompt_user("[?] is that true?")
 
     print(f"{REVERSED}reversed text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["reversed_text"] = prompt_user("[?] is that true?")
 
     print(f"{ITALIC}italic text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["italic_text"] = prompt_user("[?] is that true?")
 
     print(f"{CROSSED_OUT}crossed out text{RESET}")
-    if prompt_user("[?] is that true?"):
-        successfully_tested.append(True)
-    else:
-        successfully_tested.append(False)
+    test_results["crossed_out_text"] = prompt_user("[?] is that true?")
 
-    successfully_tested.append(package_handling(distro, package_list=[], command="update"))
-    successfully_tested.append(package_handling(distro, package_list=["htop"], command="remove"))
-    successfully_tested.append(package_handling(distro, package_list=[], command="autoremove"))
-    successfully_tested.append(init_system_handling(init_system, command="start", service="ssh"))
+    test_results["package_handling_update"] = package_handling(distro, package_list=[], command="update")
+    test_results["package_handling_remove"] = package_handling(distro, package_list=["htop"], command="remove")
+    test_results["package_handling_autoremove"] = package_handling(distro, package_list=[], command="autoremove")
+    test_results["init_system_handling_ssh"] = init_system_handling(init_system, command="start", service="ssh")
 
-    if not all(successfully_tested):
+    all_tests_passed = all(test_results.values())
+
+    if not all_tests_passed:
         print(f"\n{ORANGE}[!] Some tests are not passed:{RESET}")
     else:
-        print(f"\n{GREEN}[*] All tests are successfully passed!")
-    print(f"{successfully_tested}{RESET}")
+        print(f"\n{GREEN}[*] All tests are successfully passed!{RESET}")
+    
+    if not any(test_results.values()):
+        print(f"\n{RED}[!] Didn't pass a single test{RESET}")
+
+    for test_name, result in test_results.items():
+        print(f"{test_name} = {'true' if result else 'false'}")
 
 
 def clear_screen() -> bool:
@@ -2204,6 +2183,6 @@ def check_privileges(log: bool = False) -> bool:
         exit(1)
 
 
-# if __name__ == "__main__":
-#     check_privileges()
-#     the_unix_manager_tester()
+if __name__ == "__main__":
+    check_privileges()
+    the_unix_manager_tester()
