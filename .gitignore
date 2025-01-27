@@ -1,0 +1,26 @@
+# Python bytecode:
+__pycache__/
+*.pyc
+*.pyo
+*$py.class
+
+# Pyinstaller:
+dist/
+*.spec
+
+# Virtual environments:
+venv/
+env/
+.pkgenv/
+
+# Vim:
+.vim/
+*.swp
+*.swo
+Session.vim
+
+# Temporary files:
+*~
+\#'
+\#'\#
+.#'
