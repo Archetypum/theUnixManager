@@ -19,16 +19,26 @@ Date: 18.10.2024
 ---------------------------------------
 """
 
-# ANSI Color codes and text formating:
+# ANSI Color codes, backgrounds and text formating:
 BLACK: str = "\033[90m"
 WHITE: str = "\033[97m"
 YELLOW: str = "\033[93m"
 ORANGE: str = "\033[38;5;214m"
 BLUE: str = "\033[94m"
-CYAN: str = "\e[0;36m"
+CYAN: str = "\033[96m"
 PURPLE: str = "\033[95m"
 GREEN: str = "\033[92m"
 RED: str = "\033[91m"
+
+BG_BLACK: str = "\033[40m"
+BG_RED: str = "\033[41m"
+BG_GREEN: str = "\033[42m"
+BG_YELLOW: str = "\033[43m"
+BG_BLUE: str = "\033[44m"
+BG_MAGENTA: str = "\033[105m"
+BG_CYAN: str = "\033[46m"
+BG_WHITE: str = "\033[47m"
+
 BOLD: str = "\033[1m"
 UNDERLINE: str = "\033[4m"
 REVERSED: str = "\033[7m"
@@ -82,7 +92,7 @@ SUPPORTED_PMS: list = ["apt", "aptitude", "dpkg",
                             "pkg",
                             "pkg_add", "pkgin"
                             ]
-SUPPORTED_DISTROS: tuple = (
+SUPPORTED_DISTROS: list = (
         DEBIAN_BASED + ARCH_BASED + ALPINE_BASED + GENTOO_BASED + VOID_BASED + DRAGORA_BASED +
         SLACKWARE_BASED + FEDORA_BASED + CENTOS_BASED + GUIX_BASED +
         FREEBSD_BASED + OPENBSD_BASED + NETBSD_BASED
@@ -158,6 +168,30 @@ def the_unix_manager_tester() -> None:
 
     print(f"{RED}red text{RESET}")
     test_results["red_text"] = prompt_user("[?] is that true?")
+    
+    print(f"{BG_BLACK}black background{RESET}")
+    test_results["background_black"] = prompt_user("[?] is that true?")
+    
+    print(f"{BG_RED}red background{RESET}")
+    test_results["background_red"] = prompt_user("[?] is that true?")
+
+    print(f"{BG_GREEN}green background{RESET}")
+    test_results["background_green"] = prompt_user("[?] is that true?")
+    
+    print(f"{BG_YELLOW}yellow background{RESET}")
+    test_results["background_yellow"] = prompt_user("[?] is that true?")
+    
+    print(f"{BG_BLUE}blue background{RESET}")
+    test_results["background_blue"] = prompt_user("[?] is that true?")
+    
+    print(f"{BG_MAGENTA}magenta background{RESET}")
+    test_results["background_magenta"] = prompt_user("[?] is that true?")
+    
+    print(f"{BG_CYAN}cyan background{RESET}")
+    test_results["background_cyan"] = prompt_user("[?] is that true?")
+
+    print(f"{BG_WHITE}white background{RESET}")
+    test_results["background_white"] = prompt_user("[?] is that true?")
 
     print(f"{BOLD}bold text{RESET}")
     test_results["bold_text"] = prompt_user("[?] is that true?")
@@ -2183,6 +2217,6 @@ def check_privileges(log: bool = False) -> bool:
         exit(1)
 
 
-if __name__ == "__main__":
-    check_privileges()
-    the_unix_manager_tester()
+# if __name__ == "__main__":
+    # check_privileges()
+    # the_unix_manager_tester()
