@@ -4,7 +4,7 @@ from setuptools import setup
 
 """
 :authors: Archetypum
-:license: GNU Lesser General Public License V3, see LICENSE.md file.
+:license: GNU Lesser General Public License v3, see LICENSE-LGPL.md file.
 :copyright: (c) 2025 Archetypum
 """
 
@@ -14,16 +14,16 @@ Ultimate package manager and init system handling library made by Archetypum tha
 
 setup(
     name="theUnixManager",
-    version="1.0.0",
-    license="GNU Lesser General Public License V3, see LICENSE.md file",
+    version="1.1.1",
+    license="GNU Lesser General Public License v3, see LICENSE-LGPL.md file",
     author="Archetypum",
     author_email="archetypum@tutamail.com",
     description=(
         "Ultimate package manager and init system handling library made by Archetypum that simplifies interaction with UNIX systems and creation of system-related Python scripts."
     ),
     long_description=long_description,
-    url="https://github.com/Archetypum/theUnixManager-python",
-    download_url="https://github.com/Archetypum/theUnixManager/releases/tag/v1.0.0-stable",
+    url="https://github.com/Archetypum/theUnixManager",
+    download_url="https://github.com/Archetypum/theUnixManager/releases/tag/v1.1.1-stable",
     packages=["the_unix_manager"],
     install_requires=[],
     classifiers=[

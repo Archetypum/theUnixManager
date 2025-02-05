@@ -14,7 +14,7 @@ TODO:
     * test this on more systems.
     * many more?
 
-theUnixManager is licensed by GNU Lesser General Public License V3.
+theUnixManager is licensed by GNU Lesser General Public License v3.
 Date: 18.10.2024
 ---------------------------------------
 """
@@ -116,7 +116,7 @@ def the_unix_manager_version() -> str:
     """
     
     try:
-        with open("VERSION.txt", "r") as version_file:
+        with open("/etc/theunixmanager/python/VERSION.txt", "r") as version_file:
             return version_file.read().strip()
     except FileNotFoundError:
         return f"{RED}[!] Error: 'VERSION.txt' file not found.\nBroken installation?{RESET}"
@@ -135,12 +135,20 @@ def the_unix_manager_tester() -> None:
     test_results: dict = {} 
     init_system: str = get_init_system()
     distro: str = get_user_distro()
+    your_editor: str = get_preferred_editor()
+    root_command: str = sudo_or_doas()
 
     print(f"user distro: {distro}")
     test_results["get_user_distro"] = prompt_user("[?] is that true?")
 
     print(f"user init system: {init_system}")
     test_results["get_init_system"] = prompt_user("[?] is that true?")
+    
+    print(f"user preferred editor: {your_editor}")
+    test_results["get_preferred_editor"] = prompt_user("[?] is that true?")
+
+    print(f"root command: {root_command}")
+    test_results["sudo_or_doas"] = prompt_user("[?] is that true?")
 
     print(f"{BLACK}black text{RESET}")
     test_results["black_text"] = prompt_user("[?] is that true?")
@@ -516,6 +524,63 @@ def get_init_system() -> str:
         pass
 
     return "unknown"
+
+
+def get_preferred_editor() -> str:
+    """
+    Gets user preffered text editor and stores it in '/etc/theunixmanager/bash/EDITOR.txt'.
+	
+	Returns:
+        text_editor (str): User's preferred editor.
+    """
+    
+    editor_config_path: str = "/etc/theunixmanager/python/EDITOR.txt"
+
+    if os.path.isfile(editor_file):
+        with open(editor_file, "r") as editor_config_file:
+            stored_editor: str = editor_config_file.read().strip()
+            if stored_editor:
+                return stored_editor
+
+    print(f"{ORANGE}\n[!] Error: No preferred editor found at {editor_config_path}.{RESET}")
+    user_editor: str = input("[==>] Enter your preferred editor manually: ")
+    with open(editor_file, "w") as editor_config_file:
+        file.write(user_editor)
+
+    return user_editor
+
+
+def sudo_or_doas() -> str | None:
+    """
+    Checks for the preferred command (either sudo or doas) in '/etc/theunixmanager/bash/COMMAND.txt'.
+    If no preference is found, it checks whether sudo or doas is available on the system and stores
+    the preference accordingly. If both are available, sudo is chosen.
+
+    Returns:
+        result (str): The preferred command ('sudo' or 'doas').
+    """
+    
+    command_file: str = "/etc/theunixmanager/python/EDITOR.txt"
+
+    if os.path.isfile(command_file):
+        with open(command_file, "r") as command_config_file:
+            stored_command: str = command_config_file.read().strip()
+            if stored_command in ["sudo", "doas"]:
+                return stored_command
+
+    if which("sudo"):
+        with open(command_file, "w") as command_config_file:
+            command_config_file.write("sudo")
+        return "sudo"
+
+    elif which("doas"):
+        with open(command_file, "w") as file:
+            file.write("doas")
+        return "doas"
+    
+    else:
+        print(f"{RED}[!] Error: Neither sudo nor doas is available.{RESET}")
+        return None
 
 
 class SystemdManagement:

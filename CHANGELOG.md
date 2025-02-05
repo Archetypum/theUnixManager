@@ -1,29 +1,34 @@
-# theUnixManager v1.0.0-stable
+# theUnixManager v1.1.1-stable
 
-This is the first stable release of theUnixManager.
+Next stable release of theUnixManager python version.
 
 Features:
  
-    * 7 init systems support (systemd, sysvinit, init, s6, runit, launchd, openrc).
-    * 52 GNU/Linux and BSD UNIX distributions support (and beyond!).
-    * 16 package managers support (apt, aptitude, dpkg, portage, dnf, yum, zypper, apk, xpbs, qi, slackpkg, guix, pacman, pkg, pkg_add, pkgin).
+* _sudo_ and _doas_ support.
+
+* **7** init systems support (_systemd_, _sysvinit_, _init_, _s6_, _runit_, _launchd_, _openrc_).
+
+* **52** _GNU/Linux_ and _BSD UNIX_ distributions support (and beyond!).
+
+* **16** package managers support (_apt_, _aptitude_, _dpkg_, _portage_, _dnf_, _yum_, _zypper_, _apk_, _xpbs_, _qi_, _slackpkg_, _guix_, _pacman_, _pkg_, _pkg_add_, _pkgin_).
 
 Nothing left to say here anymore, its just first stable release.
 
 "cloc ." statistics:
 
 ```text
-      13 text files.
-      12 unique files.                              
-       4 files ignored.
+      14 text files.
+      13 unique files.                              
+       2 files ignored.
 
-github.com/AlDanial/cloc v 1.96  T=0.03 s (464.8 files/s, 104345.4 lines/s)
+github.com/AlDanial/cloc v 1.96  T=0.02 s (706.5 files/s, 190803.3 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Python                           3            411            344           1497
-Markdown                         9            161              0            281
+Bourne Shell                     2            501            356           2230
+Markdown                        10            154              0            269
+Text                             1              0              0              1
 -------------------------------------------------------------------------------
-SUM:                            12            572            344           1778
+SUM:                            13            655            356           2500
 -------------------------------------------------------------------------------
 ```
