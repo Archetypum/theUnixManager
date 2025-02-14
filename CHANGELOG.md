@@ -1,4 +1,4 @@
-# theUnixManager v1.1.1-stable
+# theUnixManager v1.1.3-stable
 
 Next stable release of theUnixManager python version.
 

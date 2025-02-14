@@ -100,11 +100,12 @@ SUPPORTED_DISTROS: list = (
 
 try:
     import os
+    import shutil
     import platform
     import subprocess
     from sys import exit
     from time import sleep
-    from typing import List
+    from typing import List, NoReturn
 except ModuleNotFoundError as import_error:
     print(f"{RED}[!] Error: python modules not found. Broken installation?:\n{import_error}{RESET}")
 
@@ -120,6 +121,62 @@ def the_unix_manager_version() -> str:
             return version_file.read().strip()
     except FileNotFoundError:
         return f"{RED}[!] Error: 'VERSION.txt' file not found.\nBroken installation?{RESET}"
+
+
+def generate_configs(log: bool = None) -> None:
+    """
+    Generates config files for theUnixManager.
+
+    Args:
+        log (bool): Enable/disable logging. None by default
+
+    Returns:
+        NoReturn: [null].
+    """
+    
+    the_unix_manager_config_path: str = "/etc/theunixmanager/python"
+    the_unix_manager_version_path: str = "/etc/theunixmanager/python/VERSION.txt"
+    the_unix_manager_preferred_editor_path: str = "/etc/theunixmanager/python/EDITOR.txt"
+    the_unix_manager_root_command_path: str = "/etc/theunixmanager/python/COMMAND.txt"
+
+    try:
+        if not os.path.exists(the_unix_manager_config_path):
+            if log:
+                print(f"{RED}[!] Error: '/etc/theunixmanager/python' not found.{RESET}")
+                print(f"{BLUE}[<==] Creating directories...{RESET}")
+            os.makedirs(the_unix_manager_config_path)
+        else:
+            if log:
+                print(f"{GREEN}[*] theUnixManager config path found.{RESET}")
+
+        if not os.path.exists(the_unix_manager_version_path):
+            if log:
+                print(f"{RED}[!] Error: 'VERSION.txt' file not found.\nBroken installation?{RESET}")
+                print(f"{BLUE}[<==] Creating file...{RESET}")
+            subprocess.run(["touch", "/etc/theunixmanager/python/VERSION.txt"], check=True)
+        else:
+            if log:
+                print(f"{GREEN}[*] theUnixManager version path found.{RESET}")
+
+        if not os.path.exists(the_unix_manager_preferred_editor_path):
+            if log:
+                print(f"{RED}[!] Error: 'EDITOR.txt' not found.\nBroken installation?{RESET}")
+                print(f"{BLUE}[<==] Creating file...{RESET}")
+            subprocess.run(["touch", "/etc/theunixmanager/python/EDITOR.txt"], check=True)
+        else:
+            if log:
+                print(f"{GREEN}[*] theUnixManager preferred editor path found.{RESET}")
+
+        if not os.path.exists(the_unix_manager_root_command_path):
+            if log:
+                print(f"{RED}[!] Error: 'COMMAND.txt' not found.\nBroken installation?{RESET}")
+                print(f"{BLUE}[<==] Creating file...{RESET}")
+            subprocess.run(["touch", "/etc/theunixmanager/python/COMMAND.txt"], check=True)
+        else:
+            if log:
+                print(f"{GREEN}[*] theUnixManager root command path found.{RESET}")
+    except subprocess.CalledProcessError:
+        pass
 
 
 def the_unix_manager_tester() -> None:
@@ -528,7 +585,7 @@ def get_init_system() -> str:
 
 def get_preferred_editor() -> str:
     """
-    Gets user preffered text editor and stores it in '/etc/theunixmanager/bash/EDITOR.txt'.
+    Gets user preferred text editor and stores it in '/etc/theunixmanager/python/EDITOR.txt'.
 	
 	Returns:
         text_editor (str): User's preferred editor.
@@ -536,50 +593,34 @@ def get_preferred_editor() -> str:
     
     editor_config_path: str = "/etc/theunixmanager/python/EDITOR.txt"
 
-    if os.path.isfile(editor_file):
-        with open(editor_file, "r") as editor_config_file:
+    if os.path.isfile(editor_config_path):
+        with open(editor_config_path, "r") as editor_config_file:
             stored_editor: str = editor_config_file.read().strip()
             if stored_editor:
                 return stored_editor
 
     print(f"{ORANGE}\n[!] Error: No preferred editor found at {editor_config_path}.{RESET}")
     user_editor: str = input("[==>] Enter your preferred editor manually: ")
-    with open(editor_file, "w") as editor_config_file:
-        file.write(user_editor)
+    with open(editor_config_path, "w") as editor_config_file:
+        editor_config_file.write(user_editor)
 
     return user_editor
 
 
 def sudo_or_doas() -> str | None:
     """
-    Checks for the preferred command (either sudo or doas) in '/etc/theunixmanager/bash/COMMAND.txt'.
-    If no preference is found, it checks whether sudo or doas is available on the system and stores
-    the preference accordingly. If both are available, sudo is chosen.
+    Checks whether sudo or doas is available on the system and stores
+    the preference accordingly.
 
     Returns:
-        result (str): The preferred command ('sudo' or 'doas').
+        result (str | None): The preferred command ('sudo' or 'doas').
     """
-    
-    command_file: str = "/etc/theunixmanager/python/EDITOR.txt"
 
-    if os.path.isfile(command_file):
-        with open(command_file, "r") as command_config_file:
-            stored_command: str = command_config_file.read().strip()
-            if stored_command in ["sudo", "doas"]:
-                return stored_command
-
-    if which("sudo"):
-        with open(command_file, "w") as command_config_file:
-            command_config_file.write("sudo")
+    if shutil.which("sudo"):
         return "sudo"
-
-    elif which("doas"):
-        with open(command_file, "w") as file:
-            file.write("doas")
+    elif shutil.which("doas"):
         return "doas"
-    
     else:
-        print(f"{RED}[!] Error: Neither sudo nor doas is available.{RESET}")
         return None
 
 
@@ -2282,6 +2323,7 @@ def check_privileges(log: bool = False) -> bool:
         exit(1)
 
 
-# if __name__ == "__main__":
-    # check_privileges()
+if __name__ == "__main__":
+    check_privileges()
+    generate_configs()
     # the_unix_manager_tester()

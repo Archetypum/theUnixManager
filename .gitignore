@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 *$py.class
+theUnixManager.egg-info/
 
 # Pyinstaller:
 dist/

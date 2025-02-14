@@ -14,7 +14,7 @@ Ultimate package manager and init system handling library made by Archetypum tha
 
 setup(
     name="theUnixManager",
-    version="1.1.1",
+    version="1.1.3",
     license="GNU Lesser General Public License v3, see LICENSE-LGPL.md file",
     author="Archetypum",
     author_email="archetypum@tutamail.com",
@@ -23,7 +23,7 @@ setup(
     ),
     long_description=long_description,
     url="https://github.com/Archetypum/theUnixManager",
-    download_url="https://github.com/Archetypum/theUnixManager/releases/tag/v1.1.1-stable",
+    download_url="https://github.com/Archetypum/theUnixManager/releases/tag/v1.1.3-stable",
     packages=["the_unix_manager"],
     install_requires=[],
     classifiers=[
